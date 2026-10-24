@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathLab - 고교 수학 완성 & 모의고사 퀴즈</title>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <!-- KaTeX for Beautiful Math Formula Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Mathematical Symbols Decoration -->
+  <div class="math-bg" aria-hidden="true">
+    <div class="math-symbol" style="top: 8%; left: 6%; font-size: 2.4rem;">∫ f(x) dx</div>
+    <div class="math-symbol" style="top: 18%; right: 12%; font-size: 2.8rem; animation-delay: -3s;">∑ n=1^∞</div>
+    <div class="math-symbol" style="top: 48%; left: 4%; font-size: 3rem; animation-delay: -7s;">e^{iπ} + 1 = 0</div>
+    <div class="math-symbol" style="top: 65%; right: 7%; font-size: 2.5rem; animation-delay: -5s;">lim_{x→0}</div>
+    <div class="math-symbol" style="top: 82%; left: 14%; font-size: 2.2rem; animation-delay: -11s;">√x² + y²</div>
+    <div class="math-symbol" style="top: 32%; right: 28%; font-size: 2rem; animation-delay: -8s;">sin²θ + cos²θ = 1</div>
+    <div class="math-symbol" style="top: 85%; right: 30%; font-size: 2.6rem; animation-delay: -2s;">∇ × F</div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="brand" onclick="location.reload()">
+      <div class="brand-icon">∑</div>
+      <div class="brand-text">Math<span>Lab</span></div>
+    </div>
+    <div class="nav-actions">
+      <!-- 사진 문제 풀이 버튼 -->
+      <button id="nav-btn-photo" class="btn-icon" title="사진 찍어 문제 풀기">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+          <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+        <span>사진 풀이</span>
+      </button>
+
+      <!-- API 키 설정 버튼 (사용자가 언제든 추가/수정 가능) -->
+      <button id="btn-open-settings" class="btn-icon" title="API / 아이피 키 설정">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>API 키 설정</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- ================================================================
+         1. 시작 화면 / 스플래시 오프닝 (Screen: Intro)
+         ================================================================ -->
+    <section id="screen-intro" class="screen active">
+      <div class="glass-card splash-wrapper">
+        <!-- 매쓰랩 대형 시그니처 로고 -->
+        <div class="splash-logo-box">
+          <span>∑</span>
+        </div>
+
+        <h1 class="splash-brand-text">Math<span>Lab</span></h1>
+        <div class="splash-korean-badge">매쓰랩 고등 수학 완성</div>
+
+        <p class="splash-desc">
+          개념부터 2026학년도 9월 모의고사 실전 퀴즈까지<br>
+          스마트한 고교 수학 학습 플랫폼
+        </p>
+
+        <!-- 자동 전환 프로그레스 바 -->
+        <div class="splash-loading-area">
+          <div class="splash-progress-track">
+            <div id="splash-progress-fill" class="splash-progress-fill"></div>
+          </div>
+          <div class="splash-loading-status">
+            <span>로그인 화면으로 이동합니다...</span>
+          </div>
+        </div>
+
+        <button id="btn-start" class="splash-skip-btn">
+          <span>바로 로그인하기</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         2. 로그인 화면 (Login Screen)
+         ================================================================ -->
+    <section id="screen-login" class="screen">
+      <div class="glass-card login-box">
+        <button id="btn-back-to-intro" class="btn-back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>매쓰랩 시작화면</span>
+        </button>
+
+        <!-- 로그인 상단 매쓰랩 브랜드 배지 -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1.1rem; border-radius: 8px;">∑</div>
+          <span style="font-weight: 800; font-size: 1.2rem; color: #0f172a;">Math<span style="color:#6366f1;">Lab</span></span>
+          <span style="font-size: 0.8rem; background: #e0e7ff; color: #4338ca; padding: 0.15rem 0.5rem; border-radius: 6px; font-weight: 700;">매쓰랩</span>
+        </div>
+
+        <div class="screen-header">
+          <h2>로그인</h2>
+          <p>이름과 비밀번호를 입력하고 수학 학습을 시작하세요.</p>
+        </div>
+
+        <!-- 간단 로그인 폼 (이름, 비밀번호) -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="input-name">이름 (또는 닉네임)</label>
+            <input 
+              type="text" 
+              id="input-name" 
+              class="input-field" 
+              placeholder="예: 홍길동" 
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-password">비밀번호</label>
+            <input 
+              type="password" 
+              id="input-password" 
+              class="input-field" 
+              placeholder="비밀번호를 입력하세요" 
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" class="btn-primary btn-full">
+            <span>로그인</span>
+          </button>
+        </form>
+
+        <div class="divider">또는</div>
+
+        <!-- 구글 로그인 버튼 -->
+        <button type="button" id="btn-google-login" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Google 계정으로 로그인</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         3. 학년 선택 화면 (Grade Selection Screen)
+         ================================================================ -->
+    <section id="screen-grade" class="screen">
+      <div class="glass-card grade-container">
+        <!-- 상단 유저 웰컴 바 -->
+        <div class="user-welcome-bar">
+          <div class="user-pill">
+            <div class="user-avatar" id="user-initial">U</div>
+            <span><strong id="user-display-name">학생</strong> 님, 환영합니다!</span>
+          </div>
+          <button class="btn-logout btn-logout-action">로그아웃</button>
+        </div>
+
+        <div class="screen-header">
+          <h2>학습할 학년을 선택해주세요</h2>
+          <p>선택하신 학년에 맞추어 2026학년도 9월 모의고사 기출 퀴즈와 커리큘럼이 제공됩니다.</p>
+        </div>
+
+        <!-- 학년 카드 그리드 (고1, 고2, 고3) -->
+        <div class="grade-grid">
+          <!-- 고등학교 1학년 -->
+          <div class="grade-card" data-grade="grade-1">
+            <div class="grade-check-indicator">✓</div>
+            <span class="grade-badge g1">2026 9월 학평</span>
+            <div class="grade-card-icon">📐</div>
+            <h3 class="grade-title">고등학교 1학년</h3>
+            <p class="grade-subtitle">공통수학1·2 개념 완성 & 9월 학력평가 기출 문제</p>
+            <ul class="subject-list">
+              <li class="subject-item"><span class="subject-bullet">•</span> 다항식 연산 & 복소수 켤레</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 항등식 계수 비교 & 이차부등식</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 순열과 조합 기초 계산</li>
+            </ul>
+          </div>
+
+          <!-- 고등학교 2학년 -->
+          <div class="grade-card" data-grade="grade-2">
+            <div class="grade-check-indicator">✓</div>
+            <span class="grade-badge g2">2026 9월 학평</span>
+            <div class="grade-card-icon">📈</div>
+            <h3 class="grade-title">고등학교 2학년</h3>
+            <p class="grade-subtitle">수학 I·II 핵심 심화 & 9월 학력평가 기출 문제</p>
+            <ul class="subject-list">
+              <li class="subject-item"><span class="subject-bullet">•</span> 지수법칙 & 지수부등식</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 유리함수 0/0꼴 극한 계산</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 등비수열의 비 & 삼각함수 변환</li>
+            </ul>
+          </div>
+
+          <!-- 고등학교 3학년 -->
+          <div class="grade-card" data-grade="grade-3">
+            <div class="grade-check-indicator">✓</div>
+            <span class="grade-badge g3">2026 수능 9월 모평</span>
+            <div class="grade-card-icon">🎯</div>
+            <h3 class="grade-title">고등학교 3학년</h3>
+            <p class="grade-subtitle">평가원 수능 9월 모의평가 공통과목 실전 퀴즈</p>
+            <ul class="subject-list">
+              <li class="subject-item"><span class="subject-bullet">•</span> 지수 계산 & 미분계수의 정의</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 시그마(∑)의 성질과 수열의 합</li>
+              <li class="subject-item"><span class="subject-bullet">•</span> 곱의 미분법 & 접선의 방정식</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center;">
+          <button id="btn-confirm-grade" class="btn-primary" style="padding: 1rem 3rem;" disabled>
+            <span>선택 완료 및 대시보드 이동</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         4. 학년 대시보드 화면 (Screen: Dashboard)
+         ================================================================ -->
+    <section id="screen-dashboard" class="screen">
+      <div class="glass-card">
+        <div class="success-box">
+          <div class="success-icon-wrap">✓</div>
+          <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">
+            학습 준비가 완료되었습니다!
+          </h2>
+          <p style="color: #64748b; font-size: 1rem;">
+            <strong id="dash-student-name" style="color: #4f46e5;">학생</strong>님, 
+            <span id="dash-selected-grade" style="font-weight: 700; color: #0f172a;">고등학교 1학년</span> 과정에 입장하셨습니다.
+          </p>
+
+          <!-- 모의고사 퀴즈 바로가기 배너 -->
+          <div class="quiz-banner-card">
+            <div class="quiz-banner-info">
+              <span class="grade-badge g1" style="margin-bottom: 0.4rem;">실전 테스트</span>
+              <h4 id="dash-quiz-title">2026학년도 9월 전국연합학력평가 기출 퀴즈</h4>
+              <p id="dash-quiz-desc">최신 모의고사 문제로 실전 감각을 점검하고 단계별 상세 해설을 확인하세요.</p>
+            </div>
+            <button id="btn-start-quiz" class="btn-primary" style="white-space: nowrap; padding: 0.85rem 1.75rem;">
+              <span>📝 퀴즈 풀기 시작</span>
+            </button>
+          </div>
+
+          <!-- 사진 찍어 문제 풀기 배너 -->
+          <div class="quiz-banner-card" style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border-color: #a7f3d0;">
+            <div class="quiz-banner-info">
+              <span class="grade-badge g2" style="background: #d1fae5; color: #047857; margin-bottom: 0.4rem;">AI 스마트 인식</span>
+              <h4 style="color: #065f46;">📸 사진 찍어 수학 문제 풀기</h4>
+              <p style="color: #047857;">모르는 문제를 사진 찍거나 캡처해서 올리면 AI가 즉시 단계별 풀이를 제공합니다.</p>
+            </div>
+            <button id="btn-dash-photo-solver" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); white-space: nowrap; padding: 0.85rem 1.75rem; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);">
+              <span>📸 사진 풀이 바로가기</span>
+            </button>
+          </div>
+
+          <div class="curriculum-preview-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: #4f46e5; text-transform: uppercase;">선택된 교과 과정</span>
+              <button id="btn-change-grade" style="background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; text-decoration: underline;">
+                학년 변경하기
+              </button>
+            </div>
+            <p id="dash-grade-tagline" style="font-weight: 600; color: #1e293b; margin-bottom: 0.75rem;"></p>
+            <ul id="dash-courses-list" class="subject-list" style="border: none; padding: 0;"></ul>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+            <button class="btn-icon btn-logout-action" style="background: #f1f5f9; color: #475569; border-color: #cbd5e1;">
+              <span>로그아웃</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         5. 모의고사 퀴즈 화면 (Screen: Quiz)
+         ================================================================ -->
+    <section id="screen-quiz" class="screen">
+      <div class="glass-card quiz-container">
+        <!-- 퀴즈 상단 바 -->
+        <div class="quiz-top-bar">
+          <div class="quiz-badge-group">
+            <span id="quiz-exam-tag" class="quiz-exam-tag">2026년 9월 학평 기출</span>
+            <span id="quiz-grade-name" style="font-weight: 700; font-size: 0.9rem; color: #1e293b;">고1</span>
+          </div>
+          <div class="quiz-stats-group">
+            <div class="quiz-timer">
+              <span>⏱️</span>
+              <span id="quiz-timer-text">00:00</span>
+            </div>
+            <div style="font-weight: 600;">
+              진행: <span id="quiz-current-num" style="color: #4f46e5; font-weight: 800;">1</span> / <span id="quiz-total-num">5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 프로그레스 바 -->
+        <div class="quiz-progress-wrap">
+          <div id="quiz-progress-bar" class="quiz-progress-bar"></div>
+        </div>
+
+        <!-- 문제 카드 박스 -->
+        <div class="quiz-question-box">
+          <div class="quiz-q-meta">
+            <div class="quiz-q-num">
+              <span>문제 <span id="q-number">1</span></span>
+              <span id="q-points" class="quiz-q-points">[2점]</span>
+            </div>
+            <span id="q-source" class="quiz-q-source">2026년 9월 기출 1번</span>
+          </div>
+          <div id="q-text" class="quiz-q-text">
+            문제를 불러오는 중입니다...
+          </div>
+        </div>
+
+        <!-- 5지선다 보기 리스트 -->
+        <div id="quiz-options-container" class="quiz-options-list">
+          <!-- 동적 생성 -->
+        </div>
+
+        <!-- 해설 박스 (정답 확인 시 노출) -->
+        <div id="quiz-explanation-box" class="quiz-explanation-box">
+          <div id="explanation-header" class="explanation-header">
+            <!-- ⭕ 정답입니다! / ❌ 오답입니다! -->
+          </div>
+          <div id="explanation-content" class="explanation-content">
+            <!-- 단계별 해설 수식 텍스트 -->
+          </div>
+        </div>
+
+        <!-- 하단 액션 버튼 -->
+        <div class="quiz-footer-actions">
+          <button id="btn-quiz-prev" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>이전 문제</span>
+          </button>
+
+          <button id="btn-quiz-submit" class="btn-primary" style="padding: 0.85rem 2.25rem;">
+            <span>정답 확인 및 해설 보기</span>
+          </button>
+
+          <button id="btn-quiz-next" class="btn-secondary">
+            <span>다음 문제</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         6. 퀴즈 최종 결과 화면 (Screen: Quiz Result)
+         ================================================================ -->
+    <section id="screen-quiz-result" class="screen">
+      <div class="glass-card result-container">
+        <div class="result-trophy">🏆</div>
+        <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 0.4rem;">
+          모의고사 퀴즈 완료!
+        </h2>
+        <p style="color: #64748b; font-size: 1rem;">
+          <strong id="result-user-name" style="color: #4f46e5;">학생</strong>님의 실전 퀴즈 풀이 결과입니다.
+        </p>
+
+        <!-- 점수 카드 -->
+        <div class="score-display-card">
+          <div class="score-big">
+            <span id="result-score-val">12</span> <span>/ <span id="result-max-score">13</span>점</span>
+          </div>
+          <p id="result-evaluation-text" style="color: #c7d2fe; font-size: 1rem; font-weight: 500;">
+            뛰어난 수학 실력입니다! 고득점을 축하합니다.
+          </p>
+
+          <div class="score-stats-grid">
+            <div>
+              <div class="stat-item-label">정답률</div>
+              <div id="result-accuracy" class="stat-item-val">80%</div>
+            </div>
+            <div>
+              <div class="stat-item-label">맞힌 문제</div>
+              <div id="result-correct-count" class="stat-item-val">4 / 5문항</div>
+            </div>
+            <div>
+              <div class="stat-item-label">소요 시간</div>
+              <div id="result-time-taken" class="stat-item-val">02:45</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 액션 버튼들 -->
+        <div style="display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap;">
+          <button id="btn-retry-wrong-quiz" class="btn-retry-wrong">
+            <span>🧬 틀린 문제 쌍둥이 변형 문제로 복습</span>
+          </button>
+          <button id="btn-retry-quiz" class="btn-primary" style="padding: 0.85rem 1.75rem;">
+            <span>🔄 원본 문제 다시 풀기</span>
+          </button>
+          <button id="btn-go-grade-select" class="btn-secondary" style="padding: 0.85rem 1.5rem;">
+            <span>📚 다른 학년 문제 풀기</span>
+          </button>
+          <button id="btn-go-dashboard" class="btn-secondary" style="padding: 0.85rem 1.25rem;">
+            <span>대시보드로 이동</span>
+          </button>
+        </div>
+
+        <!-- 전 문항 오답 노트 및 해설 복습 아코디언 -->
+        <div class="review-section">
+          <div class="review-header-flex">
+            <h3 style="margin-bottom: 0;">📋 문항 풀이 & 오답 노트 복습</h3>
+            <div class="review-filter-group">
+              <button id="btn-filter-all" class="btn-filter active">전체 문항</button>
+              <button id="btn-filter-wrong" class="btn-filter">❌ 틀린 문제만 모아보기</button>
+            </div>
+          </div>
+          <div id="review-list-container">
+            <!-- 동적 렌더링 -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================
+         7. AI 사진 문제 풀이 화면 (Screen: Photo Solver)
+         ================================================================ -->
+    <section id="screen-photo-solver" class="screen">
+      <div class="glass-card photo-solver-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <button id="btn-photo-back-dash" class="btn-back-link" style="margin-bottom: 0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>대시보드로 돌아가기</span>
+          </button>
+          <span class="grade-badge g2" style="background:#e0f2fe; color:#0369a1;">AI Vision Solver</span>
+        </div>
+
+        <div class="screen-header" style="text-align: left; margin-bottom: 1.5rem;">
+          <h2 style="font-size: 1.85rem;">📸 AI 사진 수학 문제 풀이</h2>
+          <p>수학 문제 사진을 올리거나 카메라로 촬영하면 AI가 수식을 인식하여 단계별 상세 풀이를 제공합니다.</p>
+        </div>
+
+        <!-- 파일 업로드 드롭존 -->
+        <div id="upload-drop-zone" class="upload-drop-zone">
+          <input type="file" id="photo-file-input" accept="image/*" style="display: none;">
+          <input type="file" id="camera-file-input" accept="image/*" capture="environment" style="display: none;">
+
+          <div class="upload-icon-circle">📷</div>
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 0.4rem;">
+            수학 문제 사진을 여기에 드래그하거나 클릭하여 업로드
+          </h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">
+            JPG, PNG, GIF 파일 지원 (휴대폰 캡처, 모의고사 시험지 촬영본)
+          </p>
+
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button type="button" id="btn-trigger-upload" class="btn-primary" style="padding: 0.65rem 1.25rem; font-size: 0.9rem;">
+              <span>📁 파일 선택하기</span>
+            </button>
+            <button type="button" id="btn-trigger-camera" class="btn-secondary" style="padding: 0.65rem 1.25rem; font-size: 0.9rem;">
+              <span>📸 카메라로 촬영</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 이미지 미리보기 -->
+        <div id="image-preview-wrap" class="image-preview-wrap">
+          <img id="image-preview" src="" alt="업로드된 문제 미리보기">
+          <button id="btn-remove-photo" class="btn-remove-photo">✕ 사진 삭제</button>
+        </div>
+
+        <!-- 추가 질문 입력란 -->
+        <div class="form-group" style="margin-top: 1.25rem;">
+          <label class="form-label" for="photo-additional-prompt">추가 질문 또는 알고 싶은 부분 (선택사항)</label>
+          <input 
+            type="text" 
+            id="photo-additional-prompt" 
+            class="input-field" 
+            placeholder="예: 2단계 풀이가 잘 이해 안 가는데 더 쉽게 설명해줘"
+          >
+        </div>
+
+        <!-- 분석 요청 버튼 -->
+        <button id="btn-analyze-photo" class="btn-primary btn-full" style="padding: 1rem; font-size: 1.05rem;" disabled>
+          <span>✨ AI로 문제 해설 분석하기</span>
+        </button>
+
+        <!-- 결과 카드 박스 -->
+        <div id="photo-result-card" class="photo-result-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.3rem;">🤖</span>
+              <strong style="font-size: 1.1rem; color: #0f172a;">매쓰랩 AI 풀이 해설</strong>
+            </div>
+            <span id="photo-result-status" style="font-size: 0.8rem; background: #dcfce7; color: #15803d; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 700;">분석 완료</span>
+          </div>
+          <div id="photo-result-content" class="explanation-content" style="font-size: 1rem; line-height: 1.8;">
+            <!-- AI 풀이 결과 내용 -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       8. 플로팅 AI 수학 튜터 챗봇 위젯
+       ================================================================ -->
+  <!-- 플로팅 토글 버튼 -->
+  <button id="btn-toggle-chat" class="ai-chat-floating-btn" title="AI 수학 튜터에게 질문하기">
+    <span>🤖</span>
+    <span>AI 수학 튜터</span>
+  </button>
+
+  <!-- 챗봇 팝업 윈도우 -->
+  <div id="ai-chat-window" class="ai-chat-window">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <div class="ai-avatar">∑</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.95rem;">
+            매쓰랩 AI 튜터 <span class="ai-online-dot"></span>
+          </div>
+          <div style="font-size: 0.75rem; color: #c7d2fe;">고등 수학 전문 실시간 질의응답</div>
+        </div>
+      </div>
+      <button id="btn-close-chat" class="btn-close" style="color: white; font-size: 1.25rem;">&times;</button>
+    </div>
+
+    <!-- 퀵 질문 칩 -->
+    <div class="ai-chat-chips">
+      <div class="chat-chip" data-query="켤레복소수의 성질과 문제 풀이법 알려줘">📐 켤레복소수</div>
+      <div class="chat-chip" data-query="함수의 극한 0/0 꼴은 어떻게 풀어?">📈 0/0 극한 계산법</div>
+      <div class="chat-chip" data-query="접선의 방정식 구하는 공식 설명해줘">📉 접선의 방정식</div>
+      <div class="chat-chip" data-query="지수부등식 밑에 따른 부등호 방향 규칙은?">💡 지수부등식 팁</div>
+    </div>
+
+    <!-- 채팅 메시지 영역 -->
+    <div id="ai-chat-messages" class="ai-chat-messages">
+      <div class="chat-bubble bot">
+        안녕하세요! 🎓 <strong>매쓰랩 AI 수학 튜터</strong>입니다.<br>
+        문제 풀다가 막히는 개념이나 공식, "이 문제 왜 이렇게 풀어?" 같은 질문을 편하게 남겨주세요!
+      </div>
+    </div>
+
+    <!-- 입력창 -->
+    <form id="ai-chat-form" class="ai-chat-input-bar">
+      <input 
+        type="text" 
+        id="ai-chat-input" 
+        placeholder="수학 질문을 입력하세요... (예: 접선 공식)" 
+        autocomplete="off"
+        required
+      >
+      <button type="submit" class="btn-chat-send">전송</button>
+    </form>
+  </div>
+
+  <!-- ================================================================
+       Modal: API / 아이피 키 설정 (사용자가 직접 추가)
+       ================================================================ -->
+  <div id="modal-api-key" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🔑 API 키 및 인증 설정</h3>
+        <button id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+
+      <div class="notice-box">
+        💡 <strong>안내:</strong> "아이피 키는 내가 추가할거야"라고 말씀해주신 키를 여기에 입력하시면 브라우저에 안전하게 보관되며, <code>config.js</code> 파일에서 직접 입력하셔도 됩니다.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="input-google-client-id">Google OAuth Client ID</label>
+        <input 
+          type="text" 
+          id="input-google-client-id" 
+          class="input-field" 
+          placeholder="예: xxxxx.apps.googleusercontent.com"
+        >
+        <p class="key-hint">Google Cloud Console에서 발급받은 웹 클라이언트 ID입니다. (비워둘 시 모의 로그인 제공)</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="input-math-api-key">수학 / AI 연동 API Key (Gemini 등)</label>
+        <input 
+          type="password" 
+          id="input-math-api-key" 
+          class="input-field" 
+          placeholder="API 키를 입력하세요"
+        >
+        <p class="key-hint">수학 문제 해설, 풀이 생성 등에 사용할 API 키입니다.</p>
+      </div>
+
+      <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+        <button id="btn-save-keys" class="btn-primary btn-full">
+          <span>설정 저장하기</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <span class="toast-msg">알림 메시지</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="geminiService.js"></script>
+  <script src="quizData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
